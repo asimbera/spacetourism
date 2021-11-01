@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import media from 'css-in-js-media';
+import { Link } from 'react-router-dom';
 
 const Home = styled.div`
   min-height: 100vh;
@@ -93,12 +94,13 @@ const ThirdPara = styled.p`
     text-align: left;
   }
 `;
-const ExploreButton = styled.button`
+const ExploreButton = styled(Link)`
   padding: 68px 34px;
   border-radius: 50%;
   font-family: 'Bellefair', serif;
   font-size: 20px;
   text-transform: uppercase;
+  background-color: var(--clr-white);
   color: var(--clr-primary);
   border: none;
 
@@ -122,7 +124,7 @@ export default () => (
           experience!
         </ThirdPara>
       </Paragraph>
-      <ExploreButton>Explore</ExploreButton>
+      <ExploreButton to='/dest'>Explore</ExploreButton>
     </Content>
   </Home>
 );

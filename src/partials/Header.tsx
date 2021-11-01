@@ -61,6 +61,10 @@ const NavItem = styled(NavLink)`
   padding: 39px 0;
   color: var(--clr-white);
 
+  &:hover {
+    border-bottom: 3px solid #979797;
+  }
+
   ${media('>=desktop')} {
     padding: 39px 0;
     color: var(--clr-white);

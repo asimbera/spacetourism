@@ -1,4 +1,5 @@
 import { Redirect, Route, Switch } from 'react-router-dom';
+import Destination from './pages/Destination';
 import Home from './pages/Home';
 import Header from './partials/Header';
 
@@ -9,6 +10,9 @@ function App() {
       <Switch>
         <Route path='/home'>
           <Home />
+        </Route>
+        <Route path='/dest'>
+          <Destination />
         </Route>
         <Redirect to='/home' from='/' exact />
       </Switch>
