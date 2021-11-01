@@ -1,0 +1,27 @@
+:root {
+  // colors
+  --clr-primary: hsl(230, 35%, 7%);
+  --clr-accent: hsl(231, 77%, 90%);
+  --clr-white: hsl(0, 0%, 100%);
+}
+
+* {
+  margin: 0;
+  outline: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Barlow Condensed', sans-serif;
+
+  // Hide scrollbar
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+a {
+  text-decoration: none;
+}
