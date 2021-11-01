@@ -34,6 +34,10 @@ const Container = styled.div`
     padding: 136px 38px 62px 38px;
     align-items: flex-start;
   }
+
+  ${media('>=desktop')} {
+    padding: 190px 130px 118px 120px;
+  }
 `;
 const Heading = styled.h6`
   font-family: 'Barlow Condensed', sans-serif;
@@ -45,6 +49,11 @@ const Heading = styled.h6`
     font-size: 20px;
     letter-spacing: 3.38px;
   }
+
+  ${media('>=desktop')} {
+    font-size: 28px;
+    letter-spacing: 4.72px;
+  }
 `;
 const Content = styled.div`
   margin-top: 32px;
@@ -55,6 +64,12 @@ const Content = styled.div`
 
   ${media('>=tablet')} {
     margin-top: 60px;
+  }
+
+  ${media('>=desktop')} {
+    margin-top: 64px;
+    flex-direction: row;
+    justify-content: space-around;
   }
 `;
 const PlanetImage = styled.img`
@@ -71,11 +86,20 @@ const Tabs = styled.div`
   ${media('>=tablet')} {
     margin-top: 53px;
   }
+
+  ${media('>=desktop')} {
+    margin-top: 0;
+    width: 472px;
+  }
 `;
 const TabBar = styled.nav`
   display: flex;
   align-items: flex-start;
   justify-content: center;
+
+  ${media('>=desktop')} {
+    justify-content: flex-start;
+  }
 
   * + * {
     margin-left: 26px;
@@ -91,6 +115,7 @@ const TabItem = styled.div<TabItemProps>`
   font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 2.3px;
+  cursor: pointer;
 
   ${media('>=tablet')} {
     font-size: 16px;
@@ -114,6 +139,9 @@ const TabView = styled.div`
   ${media('>=tablet')} {
     margin-top: 32px;
   }
+  ${media('>=desktop')} {
+    align-items: flex-start;
+  }
 `;
 
 const PlanetName = styled.p`
@@ -123,6 +151,10 @@ const PlanetName = styled.p`
 
   ${media('>=tablet')} {
     font-size: 80px;
+  }
+
+  ${media('>=desktop')} {
+    font-size: 100px;
   }
 `;
 
@@ -136,6 +168,12 @@ const PlanetSummary = styled.p`
     margin-top: 8px;
     padding: 0 50px;
   }
+
+  ${media('>=desktop')} {
+    font-size: 18px;
+    text-align: left;
+    padding: 0;
+  }
 `;
 
 const Seperator = styled.div`
@@ -146,6 +184,10 @@ const Seperator = styled.div`
   ${media('>=tablet')} {
     margin: 50px 0 28px 0;
     width: 90%;
+  }
+  ${media('>=desktop')} {
+    margin: 54px 0 28px 0;
+    width: 100%;
   }
 `;
 
@@ -165,6 +207,10 @@ const Details = styled.div`
   ${media('>=tablet')} {
     flex-direction: row;
   }
+
+  ${media('>=desktop')} {
+    align-items: flex-start;
+  }
 `;
 
 const DetailGroup = styled.div`
@@ -179,6 +225,12 @@ const DetailGroup = styled.div`
 
   ${media('>=tablet')} {
     padding: 0 50px;
+  }
+
+  ${media('>=desktop')} {
+    padding: 0;
+    padding-right: 80px;
+    align-items: flex-start;
   }
 `;
 
@@ -209,7 +261,10 @@ export default () => {
   return (
     <Destination>
       <Container>
-        <Heading>01 Pick your destination</Heading>
+        <Heading>
+          <b style={{ color: 'hsla(0, 0%, 100%, 0.25)' }}>01</b> Pick your
+          destination
+        </Heading>
         <Content>
           <PlanetImage src={images.webp} />
           <Tabs>
