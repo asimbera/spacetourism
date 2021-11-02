@@ -172,6 +172,7 @@ const PlanetName = styled.p`
 `;
 
 const PlanetSummary = styled.p`
+  font-family: 'Barlow Condensed', sans-serif;
   font-size: 15px;
   color: var(--clr-accent);
   text-align: center;
