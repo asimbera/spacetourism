@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
 import { getAssetUrl } from '../utils';
 import { destinations } from './data.json';
+import { PageVariant } from './Shared';
 
 const backgrounds = {
   mobile: getAssetUrl('/images/destination/background-destination-mobile.jpg'),
@@ -274,9 +275,10 @@ export default () => {
 
   return (
     <Destination
-      initial={{ opacity: 0, y: '-60%' }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: '60%' }}
+      variants={PageVariant}
+      initial='initial'
+      animate='animate'
+      exit='exit'
       transition={{ duration: 1, ease: 'easeInOut' }}
     >
       <Container>

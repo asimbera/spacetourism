@@ -3,6 +3,7 @@ import media from 'css-in-js-media';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { getAssetUrl } from '../utils';
+import { PageVariant } from './Shared';
 
 const backgrounds = {
   mobile: getAssetUrl('/images/home/background-home-mobile.jpg'),
@@ -127,9 +128,10 @@ const ExploreButton = styled(Link)`
 
 export default () => (
   <Home
-    initial={{ opacity: 0, y: '-60%' }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: '60%' }}
+    variants={PageVariant}
+    initial='initial'
+    animate='animate'
+    exit='exit'
     transition={{ duration: 1, ease: 'easeInOut' }}
   >
     <Content>

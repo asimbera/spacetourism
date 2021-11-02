@@ -4,6 +4,7 @@ import { AnimatePresence, motion, Variants } from 'framer-motion';
 import { useState } from 'react';
 import { getAssetUrl } from '../utils';
 import { crew } from './data.json';
+import { PageVariant } from './Shared';
 
 const backgrounds = {
   mobile: getAssetUrl('/images/crew/background-crew-mobile.jpg'),
@@ -11,7 +12,7 @@ const backgrounds = {
   desktop: getAssetUrl('/images/crew/background-crew-desktop.jpg'),
 };
 
-const Crew = styled.div`
+const Crew = styled(motion.div)`
   min-height: 100vh;
   /* height: 100vh; */
   background-image: url(${backgrounds.mobile});
@@ -232,7 +233,13 @@ export default () => {
   const [current, setCurrent] = useState(0);
   const { role, bio, name, images } = crew[current];
   return (
-    <Crew>
+    <Crew
+      variants={PageVariant}
+      initial='initial'
+      animate='animate'
+      exit='exit'
+      transition={{ duration: 1, ease: 'easeInOut' }}
+    >
       <Container>
         <Heading>
           <b style={{ color: 'hsla(0, 0%, 100%, 0.25)' }}>02</b> Meet your crew
