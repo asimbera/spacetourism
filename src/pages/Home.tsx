@@ -1,22 +1,29 @@
 import styled from '@emotion/styled';
 import media from 'css-in-js-media';
 import { Link } from 'react-router-dom';
+import { getAssetUrl } from '../utils';
+
+const backgrounds = {
+  mobile: getAssetUrl('/images/home/background-home-mobile.jpg'),
+  tablet: getAssetUrl('/images/home/background-home-tablet.jpg'),
+  desktop: getAssetUrl('/images/home/background-home-desktop.jpg'),
+};
 
 const Home = styled.div`
   min-height: 100vh;
   height: 100vh;
-  background-image: url('/src/assets/home/background-home-mobile.jpg');
+  background-image: url(${backgrounds.mobile});
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
 
   ${media('>=tablet')} {
     height: max-content;
-    background-image: url('/src/assets/home/background-home-tablet.jpg');
+    background-image: url(${backgrounds.tablet});
   }
   ${media('>=desktop')} {
     height: max-content;
-    background-image: url('/src/assets/home/background-home-desktop.jpg');
+    background-image: url(${backgrounds.desktop});
   }
 `;
 const Content = styled.div`
