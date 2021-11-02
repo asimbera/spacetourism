@@ -1,23 +1,32 @@
 import styled from '@emotion/styled';
 import media from 'css-in-js-media';
 import { useState } from 'react';
+import { getAssetUrl } from '../utils';
 import { destinations } from './data.json';
+
+const backgrounds = {
+  mobile: getAssetUrl('/images/destination/background-destination-mobile.jpg'),
+  tablet: getAssetUrl('/images/destination/background-destination-tablet.jpg'),
+  desktop: getAssetUrl(
+    '/images/destination/background-destination-desktop.jpg'
+  ),
+};
 
 const Destination = styled.div`
   min-height: 100vh;
   /* height: 100vh; */
-  background-image: url('/src/assets/destination/background-destination-mobile.jpg');
+  background-image: url(${backgrounds.mobile});
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
 
   ${media('>=tablet')} {
     height: max-content;
-    background-image: url('/src/assets/destination/background-destination-tablet.jpg');
+    background-image: url(${backgrounds.tablet});
   }
   ${media('>=desktop')} {
     height: max-content;
-    background-image: url('/src/assets/destination/background-destination-desktop.jpg');
+    background-image: url(${backgrounds.desktop});
   }
 `;
 const Container = styled.div`
@@ -266,7 +275,7 @@ export default () => {
           destination
         </Heading>
         <Content>
-          <PlanetImage src={images.webp} />
+          <PlanetImage src={getAssetUrl(images.webp)} />
           <Tabs>
             <TabBar>
               {destinations.map((item, key) => (

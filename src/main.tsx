@@ -6,7 +6,7 @@ import './index.scss';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
+    <Router basename='/spacetourism'>
       <App />
     </Router>
   </React.StrictMode>,

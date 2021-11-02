@@ -2,6 +2,7 @@ import { ClassNames } from '@emotion/react';
 import styled from '@emotion/styled';
 import media from 'css-in-js-media';
 import { NavLink } from 'react-router-dom';
+import { getAssetUrl } from '../utils';
 
 const Header = styled.header`
   position: fixed;
@@ -83,9 +84,12 @@ const DesktopOnly = styled.b`
 
 export default () => (
   <Header>
-    <Logo src='/src/assets/shared/logo.svg' alt='Logo' />
+    <Logo src={getAssetUrl('/images/shared/logo.svg')} alt='Logo' />
     <Hamburger>
-      <img src='/src/assets/shared/icon-hamburger.svg' alt='Hamburger' />
+      <img
+        src={getAssetUrl('/images/shared/icon-hamburger.svg')}
+        alt='Hamburger'
+      />
     </Hamburger>
     <ClassNames>
       {({ css, cx }) => {
