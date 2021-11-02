@@ -1,3 +1,4 @@
+import { AnimatePresence } from 'framer-motion';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import Destination from './pages/Destination';
 import Home from './pages/Home';
@@ -7,15 +8,17 @@ function App() {
   return (
     <div>
       <Header />
-      <Switch>
-        <Route path='/home'>
-          <Home />
-        </Route>
-        <Route path='/dest'>
-          <Destination />
-        </Route>
-        <Redirect to='/home' from='/' exact />
-      </Switch>
+      <Route
+        render={({ location }) => (
+          <AnimatePresence exitBeforeEnter initial={false}>
+            <Switch key={location.pathname} location={location}>
+              <Route path='/home' component={Home} />
+              <Route path='/dest' component={Destination} />
+              <Redirect to='/home' from='/' exact />
+            </Switch>
+          </AnimatePresence>
+        )}
+      />
     </div>
   );
 }

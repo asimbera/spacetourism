@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import media from 'css-in-js-media';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { getAssetUrl } from '../utils';
 
@@ -9,7 +10,7 @@ const backgrounds = {
   desktop: getAssetUrl('/images/home/background-home-desktop.jpg'),
 };
 
-const Home = styled.div`
+const Home = styled(motion.div)`
   min-height: 100vh;
   height: 100vh;
   background-image: url(${backgrounds.mobile});
@@ -44,7 +45,7 @@ const Content = styled.div`
     padding: 300px 165px 131px 165px;
   }
 `;
-const Paragraph = styled.div`
+const Paragraph = styled(motion.div)`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -58,7 +59,13 @@ const Paragraph = styled.div`
     margin-bottom: 0;
   }
 `;
-const FirstPara = styled.p`
+
+const paraVariant = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1 },
+};
+
+const FirstPara = styled(motion.p)`
   text-transform: uppercase;
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 16px;
@@ -71,7 +78,7 @@ const FirstPara = styled.p`
     font-size: 28px;
   }
 `;
-const SecondPara = styled.p`
+const SecondPara = styled(motion.p)`
   font-family: 'Bellefair', serif;
   font-size: 80px;
   line-height: 100px;
@@ -87,7 +94,7 @@ const SecondPara = styled.p`
     margin: 24px 0;
   }
 `;
-const ThirdPara = styled.p`
+const ThirdPara = styled(motion.p)`
   font-size: 15px;
   text-align: center;
   color: var(--clr-accent);
@@ -119,9 +126,24 @@ const ExploreButton = styled(Link)`
 `;
 
 export default () => (
-  <Home>
+  <Home
+    initial={{ opacity: 0, y: '-60%' }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: '60%' }}
+    transition={{ duration: 1, ease: 'easeInOut' }}
+  >
     <Content>
-      <Paragraph>
+      <Paragraph
+        initial={{ opacity: 0, y: 20 }}
+        animate={{
+          opacity: 1,
+          y: 0,
+          transition: {
+            staggerChildren: 0.5,
+          },
+        }}
+        transition={{ duration: 0.6 }}
+      >
         <FirstPara>So, you want to travel to</FirstPara>
         <SecondPara>Space</SecondPara>
         <ThirdPara>

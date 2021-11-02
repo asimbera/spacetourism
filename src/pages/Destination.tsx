@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import media from 'css-in-js-media';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
 import { getAssetUrl } from '../utils';
 import { destinations } from './data.json';
@@ -12,7 +13,7 @@ const backgrounds = {
   ),
 };
 
-const Destination = styled.div`
+const Destination = styled(motion.div)`
   min-height: 100vh;
   /* height: 100vh; */
   background-image: url(${backgrounds.mobile});
@@ -81,7 +82,7 @@ const Content = styled.div`
     justify-content: space-around;
   }
 `;
-const PlanetImage = styled.img`
+const PlanetImage = styled(motion.img)`
   height: 170px;
   width: 170px;
 
@@ -125,21 +126,24 @@ const TabItem = styled.div<TabItemProps>`
   text-transform: uppercase;
   letter-spacing: 2.3px;
   cursor: pointer;
+  position: relative;
 
   ${media('>=tablet')} {
     font-size: 16px;
     padding-bottom: 12px;
   }
-
-  ${(props) =>
-    props.active
-      ? 'border-bottom: 3px solid #ffffff;'
-      : `
-  &:hover {
-    border-bottom: 3px solid #969696;
-  }`}
 `;
-const TabView = styled.div`
+
+const TabItemUnderline = styled(motion.div)`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: #fff;
+`;
+
+const TabView = styled(motion.div)`
   margin-top: 20px;
   display: flex;
   flex-direction: column;
@@ -268,14 +272,45 @@ export default () => {
     destinations[currentIndex];
 
   return (
-    <Destination>
+    <Destination
+      initial={{ opacity: 0, y: '-60%' }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: '60%' }}
+      transition={{ duration: 1, ease: 'easeInOut' }}
+    >
       <Container>
         <Heading>
           <b style={{ color: 'hsla(0, 0%, 100%, 0.25)' }}>01</b> Pick your
           destination
         </Heading>
         <Content>
-          <PlanetImage src={getAssetUrl(images.webp)} />
+          <AnimatePresence exitBeforeEnter>
+            <PlanetImage
+              key={images.webp}
+              src={getAssetUrl(images.webp)}
+              initial={{
+                scale: 0,
+                x: -100,
+                opacity: 0,
+              }}
+              animate={{
+                scale: 1,
+                x: 0,
+                opacity: 1,
+                transition: {
+                  duration: 1,
+                },
+              }}
+              exit={{
+                scale: 0,
+                x: 100,
+                opacity: 0,
+                transition: {
+                  duration: 0.4,
+                },
+              }}
+            />
+          </AnimatePresence>
           <Tabs>
             <TabBar>
               {destinations.map((item, key) => (
@@ -285,24 +320,35 @@ export default () => {
                   onClick={() => setCurrentIndex(key)}
                 >
                   {item.name}
+                  {key === currentIndex && (
+                    <TabItemUnderline layoutId='underline' />
+                  )}
                 </TabItem>
               ))}
             </TabBar>
-            <TabView>
-              <PlanetName>{name}</PlanetName>
-              <PlanetSummary>{description}</PlanetSummary>
-              <Seperator />
-              <Details>
-                <DetailGroup>
-                  <SubTitle>Avg. distance</SubTitle>
-                  <SubText>{distance}</SubText>
-                </DetailGroup>
-                <DetailGroup>
-                  <SubTitle>Est. travel time</SubTitle>
-                  <SubText>{travel}</SubText>
-                </DetailGroup>
-              </Details>
-            </TabView>
+            <AnimatePresence exitBeforeEnter>
+              <TabView
+                key={name}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                transition={{ duration: 0.6 }}
+              >
+                <PlanetName>{name}</PlanetName>
+                <PlanetSummary>{description}</PlanetSummary>
+                <Seperator />
+                <Details>
+                  <DetailGroup>
+                    <SubTitle>Avg. distance</SubTitle>
+                    <SubText>{distance}</SubText>
+                  </DetailGroup>
+                  <DetailGroup>
+                    <SubTitle>Est. travel time</SubTitle>
+                    <SubText>{travel}</SubText>
+                  </DetailGroup>
+                </Details>
+              </TabView>
+            </AnimatePresence>
           </Tabs>
         </Content>
       </Container>
