@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import media from 'css-in-js-media';
+import { AnimatePresence, motion, Variants } from 'framer-motion';
 import { useState } from 'react';
 import { getAssetUrl } from '../utils';
 import { crew } from './data.json';
@@ -81,7 +82,7 @@ const Content = styled.div`
     justify-content: space-between;
   }
 `;
-const CrewImage = styled.img`
+const CrewImage = styled(motion.img)`
   height: 220px;
   width: auto;
   object-fit: cover;
@@ -124,7 +125,6 @@ const PagerGroup = styled.div`
 const PagerIcons = styled.div`
   display: flex;
   align-items: center;
-  cursor: pointer;
 
   * + * {
     margin-left: 16px;
@@ -141,11 +141,13 @@ const PagerIcons = styled.div`
   }
 `;
 
-const PagerIcon = styled.div<{ active?: boolean }>`
+const PagerIcon = styled(motion.div)`
   height: 10px;
   width: 10px;
-  background-color: ${(props) => (props.active ? '#ffffff' : '#979797')};
+  background-color: #979797;
   border-radius: 50%;
+  position: relative;
+  cursor: pointer;
 
   ${media('>=desktop')} {
     height: 15px;
@@ -153,7 +155,15 @@ const PagerIcon = styled.div<{ active?: boolean }>`
   }
 `;
 
-const CrewDetails = styled.div`
+const PagerIconActive = styled(motion.div)`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  border-radius: 50%;
+`;
+
+const CrewDetails = styled(motion.div)`
   margin-top: 32px;
   display: flex;
   flex-direction: column;
@@ -209,6 +219,15 @@ const CrewSummary = styled.p`
   }
 `;
 
+const CrewImageVariant: Variants = {
+  initial: {
+    x: 20,
+    opacity: 0,
+  },
+  animate: { x: 0, opacity: 1, transition: { duration: 1 } },
+  exit: { x: -20, opacity: 0, transition: { duration: 0.4 } },
+};
+
 export default () => {
   const [current, setCurrent] = useState(0);
   const { role, bio, name, images } = crew[current];
@@ -219,27 +238,38 @@ export default () => {
           <b style={{ color: 'hsla(0, 0%, 100%, 0.25)' }}>02</b> Meet your crew
         </Heading>
         <Content>
-          <CrewImage src={getAssetUrl(images.webp)} />
+          <AnimatePresence exitBeforeEnter>
+            <CrewImage
+              key={name}
+              src={getAssetUrl(images.webp)}
+              variants={CrewImageVariant}
+              initial='initial'
+              animate='animate'
+              exit='exit'
+            />
+          </AnimatePresence>
           <CrewImageBottomBorder />
           <PagerGroup>
             <PagerIcons>
-              {crew.map((item, key) =>
-                key === current ? (
-                  <PagerIcon
-                    key={item.name}
-                    active
-                    onClick={() => setCurrent(key)}
-                  />
-                ) : (
-                  <PagerIcon onClick={() => setCurrent(key)} key={item.name} />
-                )
-              )}
+              {crew.map((item, key) => (
+                <PagerIcon onClick={() => setCurrent(key)} key={item.name}>
+                  {key === current && <PagerIconActive layoutId='active' />}
+                </PagerIcon>
+              ))}
             </PagerIcons>
-            <CrewDetails>
-              <CrewRole>{role}</CrewRole>
-              <CrewName>{name}</CrewName>
-              <CrewSummary>{bio}</CrewSummary>
-            </CrewDetails>
+            <AnimatePresence exitBeforeEnter>
+              <CrewDetails
+                key={name}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ duration: 0.6 }}
+              >
+                <CrewRole>{role}</CrewRole>
+                <CrewName>{name}</CrewName>
+                <CrewSummary>{bio}</CrewSummary>
+              </CrewDetails>
+            </AnimatePresence>
           </PagerGroup>
         </Content>
       </Container>
